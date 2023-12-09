@@ -1,0 +1,267 @@
+Create table CUSTOMER22
+(
+  customer_id	        varchar2(5)        not null    primary key,
+  fname	            varchar2(20)       not null,
+  sname			    varchar2(20)       not null,
+  primary_address   varchar2(20)	   not null,
+  contact       	varchar2(12)       not null
+);
+
+Create table OPTOMETRIST
+(
+  opt_id	        varchar2(5)        not null    primary key,
+  fname	            varchar2(20)       not null,
+  sname			    varchar2(20)       not null,
+  contact       	varchar2(12)       not null
+);
+
+Create table EYE_WEAR
+(
+	wear_id			 number(3,0)  		not null    primary key,
+	manufacturer	 varchar2(20)       not null,
+	eye_wear_type  	 varchar2(20)	   	not null,
+	price       	 number(8,2)       	not null
+);
+
+Create table SALESS
+(
+	sales_id	     number(5,0)  		not null    primary key,
+	sales_date	     date       		not null,
+	quantity		 number(3,0)	    not null,
+	customer_id	         varchar2(5)        not null,
+					   CONSTRAINT customer_id
+                       FOREIGN KEY (customer_id)
+                       REFERENCES CUSTOMER22(customer_id),
+	opt_id	         varchar2(10)       not null,
+					   CONSTRAINT opt_id
+                       FOREIGN KEY (opt_id)
+                       REFERENCES OPTOMETRIST(opt_id),
+	wear_id			 number(3,0)  		not null,
+					   CONSTRAINT wear_id
+                       FOREIGN KEY (wear_id)
+                       REFERENCES EYE_WEAR(wear_id)
+);
+
+insert all
+  into CUSTOMER22(customer_id, fname, sname, primary_address, contact)
+    values('A115', 'Patrick', 'Connor', '3 Main Road', '0821253659')
+  into CUSTOMER22(customer_id, fname, sname, primary_address, contact)
+    values('A116', 'Sally', 'Williams', '13 Cape Road', '0769658547')
+  into CUSTOMER22(customer_id, fname, sname, primary_address, contact)
+    values('A117', 'Wallace', 'Smith', '3 Mountain Road', '0863256574')
+  into CUSTOMER22(customer_id, fname, sname, primary_address, contact)
+    values('A118', 'Richard', 'Hanson', '8 Circle Road', '0762356587')
+  into CUSTOMER22(customer_id, fname, sname, primary_address, contact)
+    values('A119', 'Gary', 'Bitterhout', '15 Main Road', '0821235258')
+  into CUSTOMER22(customer_id, fname, sname, primary_address, contact)
+    values('A120', 'Thando', 'Zolani', '88 Summer Road', '0847541254')
+  into CUSTOMER22(customer_id, fname, sname, primary_address, contact)
+    values('A121', 'Philip', 'Jackson', '3 Long Road', '0745556658')
+  into CUSTOMER22(customer_id, fname, sname, primary_address, contact)
+    values('A122', 'Sarah', 'Jones', '7 Sea Road', '0814745745')
+  Select * from dual;
+  Commit;
+  SELECT *FROM CUSTOMER22;
+  
+ insert all
+  into OPTOMETRIST(opt_id, fname, sname, contact)
+    values('OPT1', 'Andre', 'Jones',  '0721253659')
+  into OPTOMETRIST(opt_id, fname, sname, contact)
+    values('OPT2', 'Alan', 'Haslett',  '0869658547')
+  into OPTOMETRIST(opt_id, fname, sname, contact)
+    values('OPT3', 'Patricia', 'Gumede', '0763256574')
+  Select * from dual;
+  Commit;
+  SELECT *FROM OPTOMETRIST; 
+
+ insert all
+  into EYE_WEAR(wear_id, manufacturer, eye_wear_type, price)
+    values(101, 'Converse', 'Reading', 2000)
+  into EYE_WEAR(wear_id, manufacturer, eye_wear_type, price)
+    values(102, 'French Connection', 'Reading', 1200)
+  into EYE_WEAR(wear_id, manufacturer, eye_wear_type, price)
+    values(103, 'Hype', 'Reading', 1800)
+  into EYE_WEAR(wear_id, manufacturer, eye_wear_type, price)
+    values(104, 'Gant', 'Sport', 1450)
+  into EYE_WEAR(wear_id, manufacturer, eye_wear_type, price)
+    values(105, 'Oakley', 'Sport', 2300)
+  Select * from dual;
+  Commit;
+  SELECT *FROM EYE_WEAR;
+  
+  insert all
+  into SALESS(sales_id, sales_date, quantity, customer_id, opt_id, wear_id)
+    values(10111, '03-AUG-23', 2, 'A115', 'OPT1', 101)
+  into SALESS(sales_id, sales_date, quantity, customer_id, opt_id, wear_id)
+    values(10211, '04-AUG-23', 1, 'A120', 'OPT2', 103)
+  into SALESS(sales_id, sales_date, quantity, customer_id, opt_id, wear_id)
+    values(10311, '05-AUG-23', 5, 'A118', 'OPT3', 105)
+  into SALESS(sales_id, sales_date, quantity, customer_id, opt_id, wear_id)
+    values(10411, '05-AUG-23', 3, 'A117', 'OPT3', 103)
+  into SALESS(sales_id, sales_date, quantity, customer_id, opt_id, wear_id)
+    values(10511, '05-AUG-23', 8, 'A122', 'OPT2', 101)
+  into SALESS(sales_id, sales_date, quantity, customer_id, opt_id, wear_id)
+    values(10611, '06-AUG-23', 1, 'A115', 'OPT1', 101)
+  into SALESS(sales_id, sales_date, quantity, customer_id, opt_id, wear_id)
+    values(10711, '07-AUG-23', 3, 'A120', 'OPT1', 103)
+  into SALESS(sales_id, sales_date, quantity, customer_id, opt_id, wear_id)
+    values(10811, '07-AUG-23', 5, 'A118', 'OPT1', 105)
+  into SALESS(sales_id, sales_date, quantity, customer_id, opt_id, wear_id)
+    values(10911, '08-AUG-23', 7, 'A119', 'OPT3', 102)
+  Select * from dual;
+  Commit;
+SELECT *FROM SALESS;
+
+--QUESTION 1
+SELECT CUSTOMER22.fname || ' ' || CUSTOMER22.sname AS CUSTOMER,
+    OPTOMETRIST.opt_id,
+    EYE_WEAR.price
+    FROM CUSTOMER22
+    JOIN SALESS ON SALESS.customer_id = CUSTOMER22.customer_id
+    JOIN OPTOMETRIST ON OPTOMETRIST.opt_id = SALESS.opt_id
+    JOIN EYE_WEAR ON EYE_WEAR.wear_id = SALESS.wear_id
+    WHERE OPTOMETRIST.opt_id = 'OPT3';
+    
+--QUESTION 2
+    SELECT 'CUSTOMER ID: ' || CUSTOMER22.customer_id || ' , ' || CHR (10)||
+    'MANUFACTURER: ' || EYE_WEAR.manufacturer
+    FROM CUSTOMER22
+    JOIN SALESS ON SALESS.customer_id = CUSTOMER22.customer_id
+    JOIN OPTOMETRIST ON OPTOMETRIST.opt_id = SALESS.opt_id
+    JOIN EYE_WEAR ON EYE_WEAR.wear_id = SALESS.wear_id
+    WHERE SALESS.quantity > 6; 
+
+--QUETSION 3
+SET SERVEROUTPUT ON
+DECLARE
+    fname CUSTOMER22.fname%TYPE;
+    fname OPTOMETRIST.fanme%TYPE;
+    eye-wear_type EYE_WEAR.eye_wear_type%TYPE;
+    sales_date SALESS.sales_date%TYPE;
+    total EYE_WEAR.price%TYPE;
+    CURSOR INFO IS
+    SELECT 'CUSTOMER: ' || CUSTOMER22.fname || ' ' || CUSTOMER22.sname as fname , 
+    'OPTOMETRIST: ' || OPTOMETRIST.fname || ' ' || OPTOMETRIST.sname as fname,
+    'EYE WEAR: ' || EYE_WEAR.eye_wear_type,
+    'SALES DATE: ' || SALESS.sales_date,
+    'TOTAL :' || (EYE_WEAR.price * SALESS.quantity) as total
+    FROM CUSTOMER22
+    JOIN SALESS ON SALESS.customer_id = CUSTOMER22.customer_id
+    JOIN OPTOMETRIST ON OPTOMETRIST.opt_id = SALESS.opt_id
+    JOIN EYE_WEAR ON EYE_WEAR.wear_id = SALESS.wear_id
+    WHERE CUSTOMER22.customer_id = 'A117'; 
+BEGIN
+    FOR rec INFO LOOP
+    fname := rec.fname;
+    fname := rec.fanme;
+    eye-wear_type := rec.eye_wear_type;
+    sales_date := rec.sales_date;
+    total := rec.price;
+    DBMS_OUTPUT.PUT_LINE('CUSTOMER: ' || fname || ',' || CHR(10)||
+    'OPTOMETRIST: ' || fname || ' , ' || CHR(10) ||
+    'EYE WEAR: ' || eye_wear_type || ' , ' || CHR(10)||
+    'SALES DATE: ' || sales_date || ','|| CHR(10) ||
+    'TOTAL :' || price ||);
+    DBMS_OUTPUT.PUT_LINE('----------------------------------------------');
+    END LOOP;
+END;
+
+--QUESTION 4
+CREATE OR REPLACE VIEW VWCUSTOMERSALES
+AS
+SELECT CUSTOMER22.fname || ', ' || CUSTOMER22.sname as CUSTOMER,
+EYE_WEAR.eye_wear_type,
+SALESS.quantity,
+SALESS.sales_date
+FROM CUSTOMER22
+    JOIN SALESS ON SALESS.customer_id = CUSTOMER22.customer_id
+    JOIN OPTOMETRIST ON OPTOMETRIST.opt_id = SALESS.opt_id
+    JOIN EYE_WEAR ON EYE_WEAR.wear_id = SALESS.wear_id
+    WHERE CUSTOMER22.customer_id = 'A115'; 
+SELECT *FROM VWCUSTOMERSALES;
+
+--QUESTION 5
+CREATE OR REPLACE PROCEDURE spOptDetails
+(DETAILS OUT VARCHAR2)
+IS 
+BEGIN
+SELECT 'OPTOMETRIST DETAILS>> ID: ' || OPTOMETRIST.opt_id,
+    'CONTACT:' || CUSTOMER22.contact
+    FROM CUSTOMER22
+    JOIN SALESS ON SALESS.customer_id = CUSTOMER22.customer_id
+    JOIN OPTOMETRIST ON OPTOMETRIST.opt_id = SALESS.opt_id
+    JOIN EYE_WEAR ON EYE_WEAR.wear_id = SALESS.wear_id
+    WHERE OPTOMETRIST.opt_id = 'OPT3'
+    ;
+END;
+SET SERVEROUTPUT ON
+DECLARE
+    DETAILS VARCHAR2(100);
+BEGIN
+    spOptDetails(DETAILS);
+    DBMS_OUTPUT.PUT_LINE(DETAILS);
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('NO INFORMATION COULD BE GENERATED!');
+END;
+/
+--QUESTION 5.2 
+/* Exception Handling is a mechanism to handle runtime errors such as ClassNotFoundException, IOException, SQLException, RemoteException, etc. */
+
+--QUESTION 6
+CREATE OR REPLACE FUNCTION fnCUSTOMERPURCHASES (C_ID IN CUSTOMER1122.customer_id%TYPE)
+RETURN VARCHAR2
+IS
+DETAILS VARCHAR2(100);
+BEGIN
+    SELECT 'CUSTOMER ID: ' || CUSTOMER22.customer_id || CHR(10) ||
+    EYE_WEAR.eye_wear_type ||
+    SALESS.sales_date 
+    INTO DETAILS
+    FROM CUSTOMER22
+    JOIN SALESS ON SALESS.customer_id = CUSTOMER22.customer_id
+    JOIN OPTOMETRIST ON OPTOMETRIST.opt_id = SALESS.opt_id
+    JOIN EYE_WEAR ON EYE_WEAR.wear_id = SALESS.wear_id
+    WHERE CUSTOMER22.cust_id = C_ID;
+    
+    RETURN DETAILS;
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN 
+        RETURN 'NO INFORMATION FOUND';
+    WHEN OTHERS THEN
+        RAISE_APPLICATION_ERROR(-20001, 'AN ERROR WAS ENCOUNTED - ' ||
+        SQLCODE || ' - ERROR-' || SQLERRM);
+ END;
+ /
+ SELECT fnCUSTOMERPURCHASES('A115')
+ FROM DUAL;
+ 
+ SET SERVEROUTPUT ON;
+ DECLARE
+    DETAILS VARCHAR2(100);
+BEGIN
+    DETAILS:= fnCUSTOMERPURCHASES('A115');
+    DBMS_OUTPUT.PUT_LINE('DETAILS');
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('NO INFORMATION COULD BE GENERATED!');
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('AN ERROR HAS ENCOUNTED - ' || SQLCODE || ' - ERROR-' || SQLERRM);
+END;
+/
+Q.6.2 /* function 
+--Functions calculate the results of a program on the basis of the given input.
+--The function computes the outcome based on the inputs. 
+--A SELECT statement can include a function call.  
+--The resultant value or control is returned to the calling function or code.
+procedure
+--Procedures perform certain tasks in a particular order on the basis of the given inputs.
+-- The procedure completes tasks in a specific order.
+--A SELECT statement does not include a procedure call.
+-- It returns control to the code or calls the function but not a value.*/
+
+
+
+
+    
+
